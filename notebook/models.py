@@ -99,7 +99,6 @@ class NotebookPage(models.Model):
 
 class Note(models.Model):
 
-    pinned = models.BooleanField(default=False)
     title = models.CharField(max_length=400)
     description = HTMLField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -109,7 +108,7 @@ class Note(models.Model):
     notebooktab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['-pinned', '-timestamp']
+        ordering = ['-timestamp']
 
     def __str__(self):
         return self.title

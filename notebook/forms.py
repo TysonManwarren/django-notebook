@@ -13,14 +13,14 @@ class BaseForm(forms.Form):
 
 class NoteForm(BaseForm, forms.ModelForm):
 
-    category = GroupedModelChoiceField(
+    notebooktab = GroupedModelChoiceField(
         queryset=NotebookTab.objects.exclude(notebook=None),
         choices_groupby='notebook'
     )
 
     class Meta:
         model = Note
-        fields = ['pinned', 'category', 'title', 'tag', 'description']
+        fields = ['notebooktab', 'title', 'tag', 'description']
 
 
 class TagForm(BaseForm, forms.ModelForm):

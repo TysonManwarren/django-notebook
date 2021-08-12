@@ -37,10 +37,6 @@ class NoteHomepageView(ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['create_form'] = NoteForm()
-        #context['pinned_qs'] = self.object_list.filter(pinned=True)
-
-        #context['qs'] = self.object_list.filter(pinned=False)[:30]
-        #context['notebooks'] = self.object_list.filter(pinned=False)[:30]
 
         context['qs'] = self.object_list[0][:30]
         context['notebooks'] = self.object_list[1][:30]
@@ -79,10 +75,10 @@ class NoteUpdateView(UpdateView):
 
 
 @staff_member_required
-def pinned_view(request, pk):
-    instance = get_object_or_404(Note, id=pk)
-    instance.pinned = False if instance.pinned else True
-    instance.save()
+def tabbed_view(request, pk):
+    # instance = get_object_or_404(Note, id=pk)
+    # instance.pinned = False if instance.pinned else True
+    # instance.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
 
 

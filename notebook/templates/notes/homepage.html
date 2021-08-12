@@ -93,18 +93,10 @@
 
 </div>
 
-<div class='row notes'>
-    <div class='col-12'>
-        <h5> Pinned </h5>
-    </div>
-    {% for note in pinned_qs %}
-    {% include 'notes/note_card.html' %}
-    {% endfor %}
-</div>
 
 <div class='row notes'>
     <div class='col-12'>
-        <h5> Rest notes </h5>
+        <h5> Notes </h5>
     </div>
     {% for note in qs %}
     {% include 'notes/note_card.html' %}
