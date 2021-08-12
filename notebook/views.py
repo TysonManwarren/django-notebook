@@ -1,6 +1,12 @@
+import os
+
 from django.shortcuts import reverse, redirect, get_object_or_404, HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.conf import settings
+from django.http import JsonResponse
+from django.utils import timezone
 from django.views.generic import ListView, UpdateView, DetailView, CreateView
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib import messages
@@ -61,12 +67,12 @@ class NoteUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['back_url'] = self.success_url
-        context['form_title'] = f'Επεξεργασια {self.object.title}'
+        context['form_title'] = f'EDIT {self.object.title}'
         return context
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, f'Η σημειωση ανανεώθηκε!')
+        messages.success(self.request, f'The note has been updated')
         return super().form_valid(form)
 
 
@@ -82,9 +88,47 @@ def pinned_view(request, pk):
 def delete_note_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.delete()
-    messages.warning(request, 'Διαγραφηκε')
+    messages.warning(request, 'Deleted')
     return redirect(reverse('notes:home'))
 
 
+@csrf_exempt
+def upload_image(request):
+    if request.method == "POST":
+        file_obj = request.FILES['file']
+        file_name_suffix = file_obj.name.split(".")[-1]
+        if file_name_suffix not in ["jpg", "png", "gif", "jpeg", ]:
+            return JsonResponse({"message": "Wrong file format"})
 
+        upload_time = timezone.now()
+        path = os.path.join(
+            settings.MEDIA_ROOT,
+            'tinymce',
+            str(upload_time.year),
+            str(upload_time.month),
+            str(upload_time.day)
+        )
+        # If there is no such path, create
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        file_path = os.path.join(path, file_obj.name)
+
+        file_url = f'{settings.MEDIA_URL}tinymce/{upload_time.year}/{upload_time.month}/{upload_time.day}/{file_obj.name}'
+
+        if os.path.exists(file_path):
+            return JsonResponse({
+                "message": "file already exist",
+                'location': file_url
+            })
+
+        with open(file_path, 'wb+') as f:
+            for chunk in file_obj.chunks():
+                f.write(chunk)
+
+        return JsonResponse({
+            'message': 'Image uploaded successfully',
+            'location': file_url
+        })
+    return JsonResponse({'detail': "Wrong request"})
 

@@ -1,1 +1,3 @@
 __pycache__/
+notebook/uploads/
+db.sqlite3

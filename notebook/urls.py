@@ -1,7 +1,7 @@
-from django.urls import path
-from .views import (NoteHomepageView, validate_new_note_view, NoteUpdateView, pinned_view, delete_note_view,
-
-                    )
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from .views import (NoteHomepageView, validate_new_note_view, NoteUpdateView, pinned_view, delete_note_view, upload_image)
 
 app_name = 'notes'
 
@@ -12,4 +12,9 @@ urlpatterns = [
     path('note/update/<int:pk>/', NoteUpdateView.as_view(), name='note_update'),
     path('note/delete/<int:pk>/', delete_note_view, name="delete_note"),
 
-]
+    # Upload pictures
+    path('upload_image/', upload_image),
+    # Tinymce editor
+    path('tinymce/', include('tinymce.urls')),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

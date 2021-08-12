@@ -4,7 +4,7 @@ from .models import Tags
 
 class TagsTable(tables.Table):
     action = tables.TemplateColumn('''
-                                    <a class="btn btn-primary" href="{{ record.get_edit_url }}">Επεξεργασια</a>             
+                                    <a class="btn btn-primary" href="{{ record.get_edit_url }}">EDIT</a>
                                     ''')
 
     class Meta:
