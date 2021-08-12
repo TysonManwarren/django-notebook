@@ -13,7 +13,7 @@ from django.contrib import messages
 
 from django_tables2 import RequestConfig
 
-from .models import Tags, Note, Notebook
+from .models import Tags, Note, Notebook, NotebookTab
 from .forms import NoteForm, TagForm
 from .tables import TagsTable
 
@@ -30,8 +30,9 @@ class NoteHomepageView(ListView):
 
         qs_notebooks = Notebook.objects.all()
 
+        qs_notebooks_and_tabs = Notebook.objects.all().select_related()
 
-        return qs_notes, qs_notebooks
+        return qs_notes, qs_notebooks, qs_notebooks_and_tabs
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,6 +44,7 @@ class NoteHomepageView(ListView):
 
         context['qs'] = self.object_list[0][:30]
         context['notebooks'] = self.object_list[1][:30]
+        context['notebooks_and_tabs'] = self.object_list[2][:30]
 
         return context
 

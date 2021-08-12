@@ -69,7 +69,8 @@ class NotebookTab(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     color = models.CharField(max_length=1, choices=COLORS, default='a')
 
-    notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE)
+    notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE, related_name='children')
+
     class Meta:
         ordering = ['notebook_id']
 
