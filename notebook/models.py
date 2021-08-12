@@ -44,13 +44,40 @@ class Notebook(models.Model):
     color = models.CharField(max_length=1, choices=COLORS, default='a')
 
     class Meta:
-        ordering = ['-title', '-timestamp']
+        ordering = ['title', '-timestamp']
 
     def __str__(self):
         return self.title
 
     def get_edit_url(self):
         return reverse('notes:notebook_update', kwargs={'pk': self.id})
+
+    # @staticmethod
+    # def filters_data(request, qs):
+    #     q = request.GET.get('q', None)
+    #     tags = request.GET.getlist('tag', None)
+    #     if tags:
+    #         tags_ = Tags.objects.filter(id__in=tags)
+    #         qs = qs.filter(tag__in=tags_)
+    #     qs = qs.filter(title__icontains=q) if q else qs
+    #     return qs
+
+class NotebookTab(models.Model):
+
+    title = models.CharField(max_length=400)
+    description = HTMLField(blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    color = models.CharField(max_length=1, choices=COLORS, default='a')
+
+    notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE)
+    class Meta:
+        ordering = ['notebook_id']
+
+    def __str__(self):
+        return self.title
+
+    def get_edit_url(self):
+        return reverse('notes:notebooktab_update', kwargs={'pk': self.id})
 
     # @staticmethod
     # def filters_data(request, qs):
@@ -71,7 +98,7 @@ class Note(models.Model):
     date = models.DateField(blank=True, null=True)
     tag = models.ManyToManyField(Tags, blank=True)
 
-    notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE)
+    notebooktab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-pinned', '-timestamp']
