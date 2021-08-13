@@ -26,14 +26,16 @@ class NoteHomepageView(ListView):
 
     def get_queryset(self):
 
+        qs_notes = Note.objects.all()
         if 'notebook_id' in self.kwargs:
             notebook_id = self.kwargs['notebook_id']
-            qs_notes = Note.objects.all()
-        if 'notebooktab_id' in self.kwargs:
+
+        elif 'notebooktab_id' in self.kwargs:
             notebooktab_id = self.kwargs['notebooktab_id']
             qs_notes = Note.objects.all().filter(notebooktab_id=notebooktab_id)
 
-        qs_notes = Note.filters_data(self.request, qs_notes)
+        else:
+            qs_notes = Note.filters_data(self.request, qs_notes)
 
         qs_notebooks = Notebook.objects.all()
 
@@ -59,7 +61,7 @@ def validate_new_note_view(request):
     form = NoteForm(request.POST or None)
     if form.is_valid():
         form.save()
-        messages.success(request, 'New message added')
+        messages.success(request, 'New note added')
     return redirect(reverse('notes:home'))
 
 

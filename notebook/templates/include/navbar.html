@@ -11,26 +11,41 @@
     </a>
   </div>
   <div class="sidebar-wrapper">
-    <ul class="nav">
-      <!-- List notebooks -->
-      {% for notebook in notebooks_and_tabs %}
-      <li>
-        <a href="{% url 'notes:home' %}">
+
+    <div id="accordion" role="tablist" aria-multiselectable="true" class="card-collapse">
+      <div class="card card-plain">
+
+        <!-- List notebooks -->
+        {% for notebook in notebooks_and_tabs %}
+
+        <div class="card-header" role="tab" id="heading-{{ notebook.id }}">
           <i class="nc-icon nc-box"></i>
-          <p>{{ notebook }}</p>
-        </a>
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse-{{ notebook.id }}" aria-expanded="true"
+            aria-controls="collapse-{{ notebook.id }}">
 
-        <!-- List tabs -->
-        <ul class="nav" style="margin-top: 0px;">
-          {% for tab in notebook.children.all %}
-          <li><a href="{% url 'notes:tab' tab.id %}"><i class="nc-icon nc-minimal-right"></i> {{ tab }}</a></li>
-          {% endfor %}
-        </ul>
+            {{ notebook }}
 
-      </li>
+            <i class="nc-icon nc-icon nc-minimal-down"></i>
+          </a>
+        </div>
+        <div id="collapse-{{ notebook.id }}" class="collapse show" role="tabpanel"
+          aria-labelledby="heading-{{ notebook.id }}">
 
-      {% endfor %}
-    </ul>
+          <ul class="nav" style="margin: 0px; padding-left: 30px;">
+            <!-- List tabs -->
+
+            {% for tab in notebook.children.all %}
+            <li><a href=" {% url 'notes:tab' tab.id %}"> {{ tab }}</a></li>
+            {% endfor %}
+
+          </ul>
+
+        </div>
+
+        {% endfor %}
+
+      </div>
+    </div>
 
     <!-- {% regroup events by date as events_by_date %} -->
 

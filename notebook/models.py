@@ -40,11 +40,10 @@ class Notebook(models.Model):
 
     title = models.CharField(max_length=400)
     description = HTMLField(blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
     color = models.CharField(max_length=1, choices=COLORS, default='a')
 
     class Meta:
-        ordering = ['title', '-timestamp']
+        ordering = ['title']
 
     def __str__(self):
         return self.title
@@ -66,7 +65,6 @@ class NotebookTab(models.Model):
 
     title = models.CharField(max_length=400)
     description = HTMLField(blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
     color = models.CharField(max_length=1, choices=COLORS, default='a')
 
     notebook = models.ForeignKey(Notebook, on_delete=models.CASCADE, related_name='children')
@@ -86,13 +84,15 @@ class Note(models.Model):
 
     title = models.CharField(max_length=400)
     description = HTMLField(blank=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(blank=True, null=True)
-    indent = models.SmallIntegerField(max_length=1, default=0, editable=False)
+
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+    modified_timestamp = models.DateTimeField(auto_now_add=True)
+
+    indent = models.SmallIntegerField(default=0, editable=False)
     notebooktab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE)
-    display_order = models.IntegerField(max_length=10, default=0, editable=False)
+    display_order = models.IntegerField(default=0, editable=False)
     class Meta:
-        ordering = ['-timestamp']
+        ordering = ['display_order']
 
     def __str__(self):
         return self.title
