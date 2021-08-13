@@ -15,7 +15,7 @@
             <p class='text-muted'>Created {{ note.timestamp}}
             <p>
                 <a href='{{ note.get_edit_url }}' style='color:blue' class='pull-left'><i class='fa fa-edit'> </i></a>
-                <a onclick='return confirm("Εισαι σιγουρος;")' href='{% url "notes:delete_note" note.id %}'
+                <a onclick='return confirm("Are you sure?")' href='{% url "notes:delete_note" note.id %}'
                     style='color:red' class='pull-right'><i class='fa fa-trash'> </i></a>
         </div>
     </div>

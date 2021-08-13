@@ -4675,7 +4675,7 @@ License - nucleoapp.com/license/
 
 .sidebar .nav li>a,
 .off-canvas-sidebar .nav li>a {
-  margin: 10px 15px 0;
+  /* margin: 10px 15px 0; */
   color: #FFFFFF;
   display: block;
   text-decoration: none;
@@ -4683,9 +4683,9 @@ License - nucleoapp.com/license/
   text-transform: uppercase;
   cursor: pointer;
   font-size: 12px;
-  padding: 10px 8px;
+  /* padding: 10px 8px; */
   line-height: 30px;
-  opacity: .7;
+  /* opacity: .7; */
 }
 
 .sidebar .nav li .nav>li>a,

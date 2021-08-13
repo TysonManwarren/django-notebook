@@ -12,6 +12,9 @@ urlpatterns = [
     path('note/update/<int:pk>/', NoteUpdateView.as_view(), name='note_update'),
     path('note/delete/<int:pk>/', delete_note_view, name="delete_note"),
 
+    path('notebook/<int:notebook_id>/', NoteHomepageView.as_view(), name="notebook_id"),
+    path('notebook/tab/<int:notebooktab_id>/', NoteHomepageView.as_view(), name="tab"),
+
     # Upload pictures
     path('upload_image/', upload_image),
     # Tinymce editor

@@ -14,18 +14,25 @@ from django.contrib import messages
 from django_tables2 import RequestConfig
 
 from .models import Tags, Note, Notebook, NotebookTab
-from .forms import NoteForm, TagForm
-from .tables import TagsTable
+from .forms import NoteForm
+#from .tables import TagsTable
 
 
 @method_decorator(staff_member_required, name='dispatch')
 class NoteHomepageView(ListView):
+
     template_name = 'notes/homepage.html'
     #model = Note
 
     def get_queryset(self):
 
-        qs_notes = Note.objects.all()
+        if 'notebook_id' in self.kwargs:
+            notebook_id = self.kwargs['notebook_id']
+            qs_notes = Note.objects.all()
+        if 'notebooktab_id' in self.kwargs:
+            notebooktab_id = self.kwargs['notebooktab_id']
+            qs_notes = Note.objects.all().filter(notebooktab_id=notebooktab_id)
+
         qs_notes = Note.filters_data(self.request, qs_notes)
 
         qs_notebooks = Notebook.objects.all()
@@ -41,6 +48,7 @@ class NoteHomepageView(ListView):
         context['qs'] = self.object_list[0][:30]
         context['notebooks'] = self.object_list[1][:30]
         context['notebooks_and_tabs'] = self.object_list[2][:30]
+
 
         return context
 
@@ -80,7 +88,6 @@ def tabbed_view(request, pk):
     # instance.pinned = False if instance.pinned else True
     # instance.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
-
 
 @staff_member_required
 def delete_note_view(request, pk):

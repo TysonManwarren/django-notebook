@@ -81,21 +81,6 @@ class NotebookTab(models.Model):
         return reverse('notes:notebooktab_update', kwargs={'pk': self.id})
 
 
-class NotebookPage(models.Model):
-
-    title = models.CharField(max_length=400)
-
-    notebook_tab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE, related_name='children')
-
-    class Meta:
-        ordering = ['notebook_tab_id']
-
-    def __str__(self):
-        return self.title
-
-    def get_edit_url(self):
-        return reverse('notes:notebookpage_update', kwargs={'pk': self.id})
-
 
 class Note(models.Model):
 
@@ -103,10 +88,9 @@ class Note(models.Model):
     description = HTMLField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     date = models.DateField(blank=True, null=True)
-    tag = models.ManyToManyField(Tags, blank=True)
-
+    indent = models.SmallIntegerField(max_length=1, default=0, editable=False)
     notebooktab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE)
-
+    display_order = models.IntegerField(max_length=10, default=0, editable=False)
     class Meta:
         ordering = ['-timestamp']
 
@@ -119,9 +103,9 @@ class Note(models.Model):
     @staticmethod
     def filters_data(request, qs):
         q = request.GET.get('q', None)
-        tags = request.GET.getlist('tag', None)
-        if tags:
-            tags_ = Tags.objects.filter(id__in=tags)
-            qs = qs.filter(tag__in=tags_)
+        # tags = request.GET.getlist('tag', None)
+        # if tags:
+        #     tags_ = Tags.objects.filter(id__in=tags)
+        #     qs = qs.filter(tag__in=tags_)
         qs = qs.filter(title__icontains=q) if q else qs
         return qs

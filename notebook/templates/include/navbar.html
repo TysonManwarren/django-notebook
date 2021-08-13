@@ -8,7 +8,6 @@
     <a href="/" class="simple-text logo-mini">
     </a>
     <a href="{% url 'notes:home' %}" class="simple-text logo-normal">
-      Notebooks
     </a>
   </div>
   <div class="sidebar-wrapper">
@@ -17,14 +16,14 @@
       {% for notebook in notebooks_and_tabs %}
       <li>
         <a href="{% url 'notes:home' %}">
-          <i class="nc-icon nc-user-run"></i>
+          <i class="nc-icon nc-box"></i>
           <p>{{ notebook }}</p>
         </a>
 
         <!-- List tabs -->
-        <ul>
+        <ul class="nav" style="margin-top: 0px;">
           {% for tab in notebook.children.all %}
-          <li>{{ tab }}</li>
+          <li><a href="{% url 'notes:tab' tab.id %}"><i class="nc-icon nc-minimal-right"></i> {{ tab }}</a></li>
           {% endfor %}
         </ul>
 

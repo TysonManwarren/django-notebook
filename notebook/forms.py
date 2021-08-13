@@ -1,6 +1,6 @@
 from django import forms
 from .fields import GroupedModelChoiceField
-from .models import Tags, Note, Notebook, NotebookTab
+from .models import Note, Notebook, NotebookTab
 
 
 class BaseForm(forms.Form):
@@ -20,11 +20,11 @@ class NoteForm(BaseForm, forms.ModelForm):
 
     class Meta:
         model = Note
-        fields = ['notebooktab', 'title', 'tag', 'description']
+        fields = ['notebooktab', 'title', 'description']
 
 
-class TagForm(BaseForm, forms.ModelForm):
+# class TagForm(BaseForm, forms.ModelForm):
 
-    class Meta:
-        model = Tags
-        fields = '__all__'
+#     class Meta:
+#         model = Tags
+#         fields = '__all__'
