@@ -27,8 +27,13 @@ class NoteHomepageView(ListView):
     def get_queryset(self):
 
         qs_notes = Note.objects.all()
-        if 'notebook_id' in self.kwargs:
+        if 'id' in self.kwargs:
+            id = self.kwargs['id']
+            qs_notes = [Note.objects.all().filter(id=id)]
+
+        elif 'notebook_id' in self.kwargs:
             notebook_id = self.kwargs['notebook_id']
+            qs_notes = [Note.objects.all().filter(id=notebook_id)]
 
         elif 'notebooktab_id' in self.kwargs:
             notebooktab_id = self.kwargs['notebooktab_id']
@@ -86,6 +91,13 @@ class NoteUpdateView(UpdateView):
 
 @staff_member_required
 def tabbed_view(request, pk):
+    # instance = get_object_or_404(Note, id=pk)
+    # instance.pinned = False if instance.pinned else True
+    # instance.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
+
+@staff_member_required
+def tab(request, pk):
     # instance = get_object_or_404(Note, id=pk)
     # instance.pinned = False if instance.pinned else True
     # instance.save()
