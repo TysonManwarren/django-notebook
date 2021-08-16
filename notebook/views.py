@@ -1,6 +1,6 @@
 import os
 
-from django.shortcuts import reverse, redirect, get_object_or_404, HttpResponseRedirect
+from django.shortcuts import reverse, redirect, get_object_or_404, HttpResponseRedirect, render
 from django.urls import reverse_lazy
 from django.conf import settings
 from django.http import JsonResponse
@@ -18,7 +18,7 @@ from .forms import NoteForm
 #from .tables import TagsTable
 
 
-@method_decorator(staff_member_required, name='dispatch')
+#@method_decorator(staff_member_required, name='dispatch')
 class NoteHomepageView(ListView):
 
     template_name = 'notes/homepage.html'
@@ -89,21 +89,21 @@ class NoteUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-@staff_member_required
+#@staff_member_required
 def tabbed_view(request, pk):
     # instance = get_object_or_404(Note, id=pk)
     # instance.pinned = False if instance.pinned else True
     # instance.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
 
-@staff_member_required
+#@staff_member_required
 def tab(request, pk):
     # instance = get_object_or_404(Note, id=pk)
     # instance.pinned = False if instance.pinned else True
     # instance.save()
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'), reverse('notes:home'))
 
-@staff_member_required
+#@staff_member_required
 def delete_note_view(request, pk):
     instance = get_object_or_404(Note, id=pk)
     instance.delete()

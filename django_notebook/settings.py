@@ -124,3 +124,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/uploads/'
 MEDIA_ROOT = 'C:/development/projects/django/django_notebook/notebook/uploads/'
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
