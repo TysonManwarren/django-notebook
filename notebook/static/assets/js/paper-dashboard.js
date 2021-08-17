@@ -77,6 +77,12 @@ $(document).ready(function() {
       offText: data_off_label
     });
   });
+
+  $('#accordion').on('shown.bs.collapse', function (e) {
+      saveActiveAccordionPanel('accordion-activePanel', e);
+  })
+  restoreAccordionPanel('accordion-activePanel', '#accordion');
+
 });
 
 $(document).on('click', '.navbar-toggle', function() {
@@ -210,3 +216,36 @@ tinymce.init({
       'code image | ' +
       'removeformat | help',
 });
+
+
+
+function restoreAccordionPanel(storageKey, accordionId) {
+  var activeItem = localStorage.getItem(storageKey);
+  //alert('restore active panel: ' + activeItem);
+  if (activeItem) {
+    //remove default collapse settings
+    $(accordionId + " .panel-collapse").removeClass('in');
+    $("#" + activeItem).removeClass('collapse');
+
+    //show the account_last visible group
+    $("#" + activeItem).addClass("in");
+  }
+}
+
+function restoreActiveTab(storageKey, tabId) {
+  //alert('restore active tab');
+  var activeItem = localStorage.getItem(storageKey);
+  if (activeItem) {
+    $(tabId + ' a[href="' + activeItem + '"]').tab('show');
+  }
+}
+
+function saveActiveAccordionPanel(storageKey, e) {
+  //alert('save active panel');
+  localStorage.setItem(storageKey, e.target.id);
+}
+
+function saveActiveTab(storageKey, e) {
+  //alert('save active tab');
+  localStorage.setItem(storageKey, $(e.target).attr('href'));
+}
