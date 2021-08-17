@@ -25,7 +25,7 @@ SECRET_KEY = 'ndl(_-*p4(&*wl*%2me=kgvs58!wf*$pa-w^1^38@4@=$3xp-r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'tmanwarren.pythonanywhere.com']
 
 
 # Application definition
