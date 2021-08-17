@@ -50,7 +50,7 @@ class NoteHomepageView(ListView):
 
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['create_form'] = NoteForm()
+        context['create_form'] = NoteForm(initial ={'notebooktab': self.kwargs['notebooktab_id']})
 
         context['qs'] = self.object_list[0][:30]
         context['notebooks'] = self.object_list[1][:30]
