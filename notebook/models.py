@@ -88,7 +88,7 @@ class Note(models.Model):
     created_timestamp = models.DateTimeField(auto_now_add=True)
     modified_timestamp = models.DateTimeField(auto_now=True)
 
-    indent = models.SmallIntegerField(default=0, editable=False)
+    indent = models.SmallIntegerField(default=4, editable=False)
     notebooktab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE)
     display_order = models.IntegerField(default=0, editable=False)
     class Meta:
