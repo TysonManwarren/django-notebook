@@ -49,8 +49,14 @@ class NoteHomepageView(ListView):
         return qs_notes, qs_notebooks, qs_notebooks_and_tabs
 
     def get_context_data(self,**kwargs):
+
         context = super().get_context_data(**kwargs)
-        context['create_form'] = NoteForm(initial ={'notebooktab': self.kwargs['notebooktab_id']})
+
+        notebooktab_id = ''
+        if 'notebooktab_id' in self.kwargs:
+            notebooktab_id = self.kwargs['notebooktab_id']
+
+        context['create_form'] = NoteForm(initial ={'notebooktab': notebooktab_id})
 
         context['qs'] = self.object_list[0][:30]
         context['notebooks'] = self.object_list[1][:30]
