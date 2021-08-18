@@ -86,7 +86,7 @@ class Note(models.Model):
     description = HTMLField(blank=True)
 
     created_timestamp = models.DateTimeField(auto_now_add=True)
-    modified_timestamp = models.DateTimeField(auto_now_add=True)
+    modified_timestamp = models.DateTimeField(auto_now=True)
 
     indent = models.SmallIntegerField(default=0, editable=False)
     notebooktab = models.ForeignKey(NotebookTab, on_delete=models.CASCADE)

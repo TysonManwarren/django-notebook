@@ -4,15 +4,22 @@
         </div>
         <div class="card-body">
             <h4 class="card-title">{{ note|safe }}</h4>
+
+            <div class="clearfix">
+                <p class='text-muted pull-left'>Created {{ note.created_timestamp}}</p>
+                <p class='text-muted pull-right'>Modified {{ note.modified_timestamp}}
+                </p>
+            </div>
+
+
             <p class="card-text">{{ note.description|safe }}</p>
         </div>
         <div class="card-footer text-muted">
             <br>
-            <p class='text-muted'>Created {{ note.created_timestamp}} Modified {{ note.modified_timestamp}}
-            <p>
-                <a href='{{ note.get_edit_url }}' style='color:blue' class='pull-left'><i class='fa fa-edit'> </i></a>
-                <a onclick='return confirm("Are you sure?")' href='{% url "notes:delete_note" note.id %}'
-                    style='color:red' class='pull-right'><i class='fa fa-trash'> </i></a>
+
+            <a href='{{ note.get_edit_url }}' style='color:blue' class='pull-left'><i class='fa fa-edit'> </i></a>
+            <a onclick='return confirm("Are you sure?")' href='{% url "notes:delete_note" note.id %}' style='color:red'
+                class='pull-right'><i class='fa fa-trash'> </i></a>
         </div>
     </div>
 </div>

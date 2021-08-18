@@ -94,7 +94,7 @@ class NoteUpdateView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['back_url'] = self.success_url
-        context['form_title'] = f'EDIT {self.object.title}'
+        context['form_title'] = f'[ MODIFYING ] {self.object.title}'
         return context
 
     def form_valid(self, form):
