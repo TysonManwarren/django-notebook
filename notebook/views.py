@@ -22,7 +22,9 @@ from .forms import NoteForm
 class NoteHomepageView(ListView):
 
     template_name = 'notes/homepage.html'
-    #model = Note
+    model = Note
+
+
 
     def get_queryset(self):
 
@@ -41,6 +43,7 @@ class NoteHomepageView(ListView):
 
         else:
             qs_notes = Note.filters_data(self.request, qs_notes)
+            qs_notes = []
 
         qs_notebooks = Notebook.objects.all()
 

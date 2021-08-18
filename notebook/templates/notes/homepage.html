@@ -65,10 +65,13 @@
                         </div>
                     </div>
 
-
+                    {% if qs %}
                     {% for note in qs %}
                     {% include 'notes/note_card.html' %}
                     {% endfor %}
+                    {% else %}
+                    No notes here. Please select a notebook tab on the left, or a note on the right.
+                    {% endif %}
 
 
                 </div>
@@ -80,11 +83,13 @@
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bd-example-modal-lg">New
                     Note</button>
                 <!-- { endif } -->
-                <ul>
-                    {% for note in qs %}
-                    <li>{{ note.title }}</li>
-                    {% endfor %}
-                </ul>
+
+                {% for note in qs %}
+                <button type="button" class="btn btn-active" style="padding: 2px; margin: 2px;">
+                    {{ note.title }}
+                </button>
+                {% endfor %}
+
             </div>
         </div>
     </div>
