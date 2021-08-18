@@ -81,15 +81,13 @@ def validate_new_note_view(request):
     if form.is_valid():
         form.save()
         messages.success(request, 'New note added')
-    return redirect(reverse('notes:home'))
+    return redirect(reverse('notes:note', args=[form.instance.notebooktab_id, form.instance.id]))
 
 
-@method_decorator(staff_member_required, name='dispatch')
+#@method_decorator(staff_member_required, name='dispatch')
 class NoteUpdateView(UpdateView):
-    form_class = NoteForm
-    #success_url = reverse_lazy('notes:home')
 
-    success_url = reverse_lazy('notes:note', args=[37, 8])
+    form_class = NoteForm
 
     template_name = 'notes/form.html'
     model = Note
@@ -101,7 +99,7 @@ class NoteUpdateView(UpdateView):
         return context
 
     def form_valid(self, form):
-        success_url = reverse_lazy('notes:note', args=[self.object.notebooktab_id, self.object.id])
+        self.success_url = reverse_lazy('notes:note', args=[self.object.notebooktab_id, self.object.id])
         form.save()
         messages.success(self.request, f'The note has been updated')
         return super().form_valid(form)
