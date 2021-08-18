@@ -15,6 +15,7 @@ urlpatterns = [
     path('view/<int:id>/', NoteHomepageView.as_view(), name="id"),
     path('notebook/<int:notebook_id>/', NoteHomepageView.as_view(), name="notebook_id"),
     path('notebook/tab/<int:notebooktab_id>/', NoteHomepageView.as_view(), name="tab"),
+    path('notebook/tab/<int:notebooktab_id>/note/<int:note_id>', NoteHomepageView.as_view(), name="note"),
 
     # Upload pictures
     path('upload_image/', upload_image),

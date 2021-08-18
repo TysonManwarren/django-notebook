@@ -67,7 +67,9 @@
 
                     {% if qs %}
                     {% for note in qs %}
+                    {% if note.id == note_id %}
                     {% include 'notes/note_card.html' %}
+                    {% endif %}
                     {% endfor %}
                     {% else %}
                     No notes here. Please select a notebook tab on the left, or a note on the right.
@@ -85,9 +87,10 @@
                 <!-- { endif } -->
 
                 {% for note in qs %}
-                <button type="button" class="btn btn-active" style="padding: 2px; margin: 2px;">
-                    {{ note.title }}
-                </button>
+                <a href="{% url 'notes:note' notebooktab_id note.id %}"><button type="button" class="btn btn-active"
+                        style="padding: 2px; padding-left: {{ note.indent }}px; margin: 2px; text-align: left; width: 98%;">
+                        {{ note.title }}
+                    </button></a>
                 {% endfor %}
 
             </div>

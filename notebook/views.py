@@ -24,11 +24,12 @@ class NoteHomepageView(ListView):
     template_name = 'notes/homepage.html'
     model = Note
 
-
-
     def get_queryset(self):
 
         qs_notes = Note.objects.all()
+
+        note_id = ''
+
         if 'id' in self.kwargs:
             id = self.kwargs['id']
             qs_notes = [Note.objects.all().filter(id=id)]
@@ -39,6 +40,8 @@ class NoteHomepageView(ListView):
 
         elif 'notebooktab_id' in self.kwargs:
             notebooktab_id = self.kwargs['notebooktab_id']
+            if 'note_id' in self.kwargs:
+                note_id = self.kwargs['note_id']
             qs_notes = Note.objects.all().filter(notebooktab_id=notebooktab_id)
 
         else:
@@ -49,7 +52,7 @@ class NoteHomepageView(ListView):
 
         qs_notebooks_and_tabs = Notebook.objects.all().select_related()
 
-        return qs_notes, qs_notebooks, qs_notebooks_and_tabs
+        return qs_notes, qs_notebooks, qs_notebooks_and_tabs, note_id
 
     def get_context_data(self,**kwargs):
 
@@ -58,6 +61,7 @@ class NoteHomepageView(ListView):
         notebooktab_id = ''
         if 'notebooktab_id' in self.kwargs:
             notebooktab_id = self.kwargs['notebooktab_id']
+            context['notebooktab_id'] = notebooktab_id
 
         context['create_form'] = NoteForm(initial ={'notebooktab': notebooktab_id})
 
@@ -65,6 +69,7 @@ class NoteHomepageView(ListView):
         context['notebooks'] = self.object_list[1][:30]
         context['notebooks_and_tabs'] = self.object_list[2][:30]
 
+        context['note_id'] = self.object_list[3]
 
         return context
 
