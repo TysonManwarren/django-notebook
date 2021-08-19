@@ -1,4 +1,5 @@
 __pycache__/
 notebook/uploads/
-db.sqlite3
+db.sqlite3*
 settings.py
+reset_database.sh
