@@ -203,6 +203,9 @@ function hexToRGB(hex, alpha) {
 tinymce.init({
   selector: 'textarea',  // change this value according to your HTML
   images_upload_url: '/upload_image/', // Image upload address in Django route
+  relative_urls : false,
+  remove_script_host : false,
+  //document_base_url : 'http://www.example.com/path1/',
   height: 440,
   plugins: [
       'advlist autolink lists link image charmap print preview anchor',
