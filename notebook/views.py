@@ -71,6 +71,16 @@ class NoteHomepageView(ListView):
 
         context['note_id'] = self.object_list[3]
 
+        context['action_url'] = '/search/'
+
+        if self.request.path == '/search/':
+            qs1 = Note.objects.all().filter(
+                title__icontains=self.request.GET.get('q', None))
+            qs2 = Note.objects.all().filter(
+                description__icontains=self.request.GET.get('q', None)
+            )
+            context['qs'] = qs1 | qs2
+
         return context
 
 

@@ -1,7 +1,8 @@
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import (NoteHomepageView, validate_new_note_view, NoteUpdateView, tabbed_view, delete_note_view, upload_image)
+from .views import (NoteHomepageView, validate_new_note_view, NoteUpdateView, tabbed_view,
+                    delete_note_view, upload_image)
 
 app_name = 'notes'
 
@@ -19,7 +20,11 @@ urlpatterns = [
 
     # Upload pictures
     path('upload_image/', upload_image),
+
     # Tinymce editor
     path('tinymce/', include('tinymce.urls')),
+
+    # Search
+    path('search/', NoteHomepageView.as_view(), name='search')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

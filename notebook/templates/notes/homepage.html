@@ -67,7 +67,7 @@
 
                     {% if qs %}
                     {% for note in qs %}
-                    {% if note.id == note_id %}
+                    {% if note_id == '' or note_id and note.id == note_id %}
                     {% include 'notes/note_card.html' %}
                     {% endif %}
                     {% endfor %}
@@ -86,6 +86,7 @@
                     Note</button>
                 <!-- { endif } -->
 
+                {% if notebooktab_id %}
                 {% for note in qs %}
                 <a href="{% url 'notes:note' notebooktab_id note.id %}"><button type="button"
                         class="btn btn-active responsive-width"
@@ -93,6 +94,7 @@
                         {{ note.title }}
                     </button></a>
                 {% endfor %}
+                {% endif %}
 
             </div>
         </div>
