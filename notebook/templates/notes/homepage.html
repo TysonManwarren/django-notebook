@@ -87,7 +87,8 @@
                 <!-- { endif } -->
 
                 {% for note in qs %}
-                <a href="{% url 'notes:note' notebooktab_id note.id %}"><button type="button" class="btn btn-active"
+                <a href="{% url 'notes:note' notebooktab_id note.id %}"><button type="button"
+                        class="btn btn-active responsive-width"
                         style="padding: 2px; padding-left: {{ note.indent }}px; margin: 2px; text-align: left; width: 98%;">
                         {{ note.title }}
                     </button></a>
