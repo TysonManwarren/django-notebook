@@ -64,10 +64,13 @@
 
                         </div>
                     </div>
+                    {% if q %}
+                    <p>Search results for {{ q }}...</p>
+                    {% endif %}
 
-                    {% if qs %}
+                    {% if qs and note_id or q %}
                     {% for note in qs %}
-                    {% if note_id == '' or note_id and note.id == note_id %}
+                    {% if q or note.id == note_id %}
                     {% include 'notes/note_card.html' %}
                     {% endif %}
                     {% endfor %}

@@ -72,20 +72,18 @@ class NoteHomepageView(ListView):
         context['note_id'] = self.object_list[3]
 
         context['action_url'] = '/search/'
+        context['q'] = self.request.GET.get('q', None)
 
         if self.request.path == '/search/':
-            qs1 = Note.objects.all().filter(
-                title__icontains=self.request.GET.get('q', None))
-            qs2 = Note.objects.all().filter(
-                description__icontains=self.request.GET.get('q', None)
-            )
+            qs1 = Note.objects.all().filter(title__icontains=context['q'])
+            qs2 = Note.objects.all().filter(description__icontains=context['q'])
             context['qs'] = qs1 | qs2
 
         return context
 
 
 
-@staff_member_required
+#@staff_member_required
 def validate_new_note_view(request):
     form = NoteForm(request.POST or None)
     if form.is_valid():
