@@ -2,7 +2,6 @@ from django.db import models
 from django.urls import reverse
 from tinymce.models import HTMLField
 
-
 COLORS = (
         ('a', 'yellow'),
         ('b', 'white'),

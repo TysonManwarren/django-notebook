@@ -15,6 +15,7 @@ from django_tables2 import RequestConfig
 
 from .models import Tags, Note, Notebook, NotebookTab
 from .forms import NoteForm
+from history.signals import object_viewed_signal
 #from .tables import TagsTable
 
 
@@ -33,16 +34,34 @@ class NoteHomepageView(ListView):
         if 'id' in self.kwargs:
             id = self.kwargs['id']
             qs_notes = [Note.objects.all().filter(id=id)]
+            if self.request.user.is_authenticated and self.get_object() is not None:
+                object_viewed_signal.send(self.get_object().__class__, instance=self.get_object(), request=self.request)
 
         elif 'notebook_id' in self.kwargs:
             notebook_id = self.kwargs['notebook_id']
             qs_notes = [Note.objects.all().filter(id=notebook_id)]
 
         elif 'notebooktab_id' in self.kwargs:
+
+            # We are on a tab, find out which one here
             notebooktab_id = self.kwargs['notebooktab_id']
+
+            # Get all the notes for the tab
+            qs_notes = Note.objects.all().filter(notebooktab_id=notebooktab_id)
+
+            # Are we viewing a specific note?
             if 'note_id' in self.kwargs:
                 note_id = self.kwargs['note_id']
-            qs_notes = Note.objects.all().filter(notebooktab_id=notebooktab_id)
+
+                the_note_object =  Note.objects.all().filter(id=note_id)[0]
+
+                if self.request.user.is_authenticated and the_note_object is not None:
+                    object_viewed_signal.send(the_note_object.__class__, instance=the_note_object, request=self.request)
+
+            else:
+
+                # Get the note id of the first note
+                note_id = qs_notes[0].id
 
         else:
             qs_notes = Note.filters_data(self.request, qs_notes)

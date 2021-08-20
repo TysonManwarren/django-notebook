@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'django_tables2',
-    'notebook',
     'tinymce',
+
+    'notebook',
+    'history',
 ]
 
 MIDDLEWARE = [
