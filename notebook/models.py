@@ -98,7 +98,7 @@ class Note(models.Model):
         return self.title
 
     def get_edit_url(self):
-        return reverse('notes:note_update', kwargs={'pk': self.id})
+        return reverse('notes:note_update', kwargs={'pk': self.id, 'notebooktab_id': self.notebooktab_id})
 
     @staticmethod
     def filters_data(request, qs):
