@@ -102,7 +102,7 @@ class NoteUpdateView(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['back_url'] = self.success_url
+        context['back_url'] = reverse_lazy('notes:note', args=[self.object.notebooktab_id, self.object.id])
         context['form_title'] = f'[ MODIFYING ] {self.object.title}'
         return context
 
