@@ -61,7 +61,8 @@ class NoteHomepageView(ListView):
             else:
 
                 # Get the note id of the first note
-                note_id = qs_notes[0].id
+                if len(qs_notes) > 0:
+                    note_id = qs_notes[0].id
 
         else:
             qs_notes = Note.filters_data(self.request, qs_notes)
