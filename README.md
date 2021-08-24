@@ -1,9 +1,6 @@
 # django-notebook
 
-Based off of Christos Stathakis' tutorial "Create a Notebook with Django"
-https://christosstath10.medium.com/create-a-notebook-with-django-f25c28db2643
-
-Added more/different features to mimic Microsoft OneNote.
+Note taking application built in Django.  Designed to closely mimic Microsoft OneNote's design and functionality.
 
 Running example on Python Anywhere:
 http://tmanwarren.pythonanywhere.com/
@@ -42,3 +39,14 @@ Finally, run the app
 ```bash
 python manage.py runserver
 ```
+
+## Acknowledgements
+
+Based off of Christos Stathakis' tutorial "Create a Notebook with Django"
+https://christosstath10.medium.com/create-a-notebook-with-django-f25c28db2643
+
+History feature implemented by following Emmanuel Okiche's tutorial:
+https://github.com/fleepgeek/django-history-app
+
+Reversioning/versioning implemented thanks to Ruhshan Ahmed Abir's tutorial:
+https://ruhshan-ahmed.medium.com/easiest-way-to-enable-version-control-in-django-a317eebfef39

@@ -10,6 +10,8 @@ black = "*"
 django = "*"
 django-tinymce = "*"
 django-tables2 = "*"
+django-reversion = "*"
+djangorestframework = "*"
 
 [requires]
 python_version = "3.8"

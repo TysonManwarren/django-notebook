@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -11,7 +12,7 @@ User = settings.AUTH_USER_MODEL
 class History(models.Model):
     user            = models.ForeignKey(User, on_delete=models.CASCADE)
     content_type    = models.ForeignKey(ContentType, on_delete=models.SET_NULL, null=True) # product, post
-    object_id       = models.PositiveIntegerField() # 1,2,3
+    object_id       = models.UUIDField(primary_key=False, default=uuid.uuid4, editable=False)
     content_object  = GenericForeignKey() # is the actual object
     viewed_on       = models.DateTimeField(auto_now_add=True)
 

@@ -1,5 +1,10 @@
 import os
 
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from reversion.models import Version
+from django.db.models import F
+
 from django.shortcuts import reverse, redirect, get_object_or_404, HttpResponseRedirect, render
 from django.urls import reverse_lazy
 from django.conf import settings
@@ -195,3 +200,20 @@ def upload_image(request):
         })
     return JsonResponse({'detail': "Wrong request"})
 
+
+@api_view()
+def note_history(request, note_id):
+    note = Note.objects.get(id=note_id)
+    versions = Version.objects.get_for_object(note)
+
+    data = versions.values('pk',
+                           date_created=F('revision__date_created'),
+                           user=F('revision__user__username'),
+                           comment=F('revision__comment'))
+
+    return Response({"data": data})
+
+@api_view()
+def note_version(request, version_id):
+    v = Version.objects.get(id=version_id)
+    return Response({"data": v.field_dict})
